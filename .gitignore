@@ -6,3 +6,5 @@
 /ShopBridge/.vs
 /ShopBridge/bin
 /ShopBridge/obj
+/ShopBridge.UnitTest/bin
+/ShopBridge.UnitTest/obj

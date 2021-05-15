@@ -1,12 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopBridge.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ShopBridge
 {
+    [ExcludeFromCodeCoverage]
     public class InventoryDBContext : DbContext
     {
         public InventoryDBContext(DbContextOptions<InventoryDBContext> options) :base(options)

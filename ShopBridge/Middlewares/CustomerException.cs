@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace ShopBridge.Middlewares
 {
-    public class CustomerException: Exception
+    [ExcludeFromCodeCoverage]
+    public class NotFoundException: Exception
     {
-        public CustomerException() : base() { }
+        public NotFoundException() : base() { }
 
-        public CustomerException(string message) : base(message) { }
+        public NotFoundException(string message) : base(message) { }
 
-        public CustomerException(string message, params object[] args)
+        public NotFoundException(string message, params object[] args)
             : base(String.Format(CultureInfo.CurrentCulture, message, args))
         {
         }

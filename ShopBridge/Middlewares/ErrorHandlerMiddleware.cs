@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace ShopBridge.Middlewares
 {
+    [ExcludeFromCodeCoverage]
     public class ErrorHandlerMiddleware
     {
         private readonly RequestDelegate _next;
@@ -30,13 +32,13 @@ namespace ShopBridge.Middlewares
 
                 switch (error)
                 {
-                    case CustomerException e:
+                    case NotFoundException e:
                         // custom application error
-                        response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        break;
-                    case KeyNotFoundException e:
-                        // not found error
                         response.StatusCode = (int)HttpStatusCode.NotFound;
+                        break;
+                    case UnauthorizedAccessException e:
+                        // not found error
+                        response.StatusCode = (int)HttpStatusCode.Unauthorized;
                         break;
                     default:
                         // unhandled error

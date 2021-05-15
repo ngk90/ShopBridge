@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ShopBridge.DTO
 {
+    [ExcludeFromCodeCoverage]
     public class InventoryDto
     {
         public int? Id { get; set; }

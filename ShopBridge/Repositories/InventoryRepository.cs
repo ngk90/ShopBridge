@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ShopBridge.DTO;
+using ShopBridge.Middlewares;
 using ShopBridge.Models;
 using System;
 using System.Collections.Generic;
@@ -35,24 +36,22 @@ namespace ShopBridge.Repositories
         public async Task<int> Delete(int id)
         {
             var model = await inventoryDBContext.Inventories.FindAsync(id);
-            if (model != null)
-            {
-                inventoryDBContext.Remove(model);
-                return await inventoryDBContext.SaveChangesAsync();
-            }
-            return 0;
+            if (model == null)
+                throw new NotFoundException("Inventory is not available into system");
+            inventoryDBContext.Remove(model);
+            return await inventoryDBContext.SaveChangesAsync();            
         }
 
         public async Task<int> Edit(InventoryDto inventory)
         {
-            if (inventory != null)
-            {
-                var inventoryModel = mapper.Map<Inventory>(inventory);
-                inventoryDBContext.Entry(inventoryModel).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            var model = await inventoryDBContext.Inventories.FindAsync(inventory.Id);
+            if (model == null)
+                throw new NotFoundException("Inventory is not available into system");
+           
+            var inventoryModel = mapper.Map<Inventory>(inventory);
+            inventoryDBContext.Entry(inventoryModel).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 
-                return await inventoryDBContext.SaveChangesAsync();
-            }
-            return 0;
+            return await inventoryDBContext.SaveChangesAsync();           
         }
 
         public async Task<IEnumerable<InventoryDto>> GetAll()
